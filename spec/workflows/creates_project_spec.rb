@@ -5,6 +5,15 @@ RSpec.describe CreatesProject do
   let(:creator) { CreatesProject.new(
     name: "Project Runway", task_string: task_string) }
 
+  describe "failure cases" do
+    let(:task_string) { "" }
+    it "fails when trying to save a project with no name" do
+      creator.name = ""
+      creator.create
+      expect(creator).not_to be_a_success
+    end
+  end
+
   describe "initialization" do
     let(:task_string) { "" }
     it "creates a project given a name" do
