@@ -3,7 +3,23 @@ class CreatesProject
 
   def initialize(name: "", task_string: "")
     @name = name
-    @task_string = task_string
+    @task_string = task_string || ""
+    @success = false
+  end
+
+  def success?
+    @success
+  end
+
+  def build
+    self.project = Project.new(name: name)
+    project.tap {|p|p.tasks = convert_string_to_tasks}
+  end
+
+  def create
+    build
+    result = project.save! #returns true if successful
+    @success = result
   end
 
   def convert_string_to_tasks
@@ -15,14 +31,5 @@ class CreatesProject
 
   def size_as_integer(size_string)
     size_string.blank? ? 1 : [size_string.to_i, 1].max
-  end
-
-  def create
-    build; project.save!
-  end
-
-  def build
-    self.project = Project.new(name: name)
-    project.tap {|p|p.tasks = convert_string_to_tasks}
   end
 end
