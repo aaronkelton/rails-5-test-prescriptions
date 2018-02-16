@@ -18,7 +18,7 @@ class CreatesProject
 
   def create
     build
-    result = project.save! #returns true if successful
+    result = project.save #returns true if successful
     @success = result
   end
 
