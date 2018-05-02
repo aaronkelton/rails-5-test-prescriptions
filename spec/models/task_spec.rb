@@ -4,6 +4,17 @@ RSpec.describe Task do
   describe "default" do
     let(:task) { Task.new }
 
+    # 1. Doesn't work from book at this point
+    # 2. I think the method should be 'completed'
+    # 3. Unused variables. Just create the Task
+    #it "finds completed tasks" do
+    #  completed = Task.create(completed_at: 1.day.ago, title: "Completed")
+    #  incompleted = Task.create(completed_at: nil, title: "Not Completed")
+    #  expect(Task.complete.map(&:title)).to eq ["Completed"]
+    #
+    #  expect(Task.complete).to match([an_object_having_attributes(title: "Completed")])
+    #end
+
     it "does not have a new task as complete" do
       expect(task).not_to be_complete
     end
