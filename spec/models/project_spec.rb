@@ -60,8 +60,8 @@ RSpec.describe Project do
     end
 
     it "can calculate total size" do
-      expect(project.total_size).to eq(10)
-      expect(project.total_size).not_to eq(5)
+      expect(project).to be_of_size(10)
+      expect(project).not_to be_of_size(5)
     end
 
     it "can calculate remaining size" do
