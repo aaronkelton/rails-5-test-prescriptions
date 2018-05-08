@@ -1,28 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Project do
-  describe "basic" do
-    let(:project) { Project.new }
-    let(:task) { Task.new }
-
-    it "properly handles a blank project" do
-      expect(project.completed_velocity).to eq(0)
-      expect(project.current_rate).to eq(0)
-      expect(project.projected_days_remaining).to be_nan
-      expect(project).not_to be_on_schedule
-    end
+  describe "without a task" do
+    let(:project) { build_stubbed(:project) }
 
     it "considers a project with no tasks to be done" do
       expect(project).to be_done
     end
 
+    it "properly estimates a blank project" do
+      expect(project.completed_velocity).to eq(0)
+      expect(project.current_rate).to eq(0)
+      expect(project.projected_days_remaining).to be_nan
+      expect(project).not_to be_on_schedule
+    end
+  end
+
+  describe "with a task" do
+    let(:project) { build_stubbed(:project, tasks: [task]) }
+    let(:task) { build_stubbed(:task) }
+  end
+
     it "knows that a project with an incomplete task is not done" do
-      project.tasks << task
       expect(project).not_to be_done
     end
 
     it "marks a project done if its tasks are done" do
-      project.tasks << task
       task.mark_completed
       expect(project).to be_done
     end
