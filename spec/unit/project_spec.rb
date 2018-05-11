@@ -7,8 +7,15 @@ RSpec.describe "some Rappin unit test" do
     let(:gutenberg) { create(:project, name: "Project Gutenberg", start_date: 1.day.ago) }
 
     it "finds recently started projects" do
-      actual = Project.find_recently_started(6.months)
-      expect(actual.size).to eq(3)
+      # effectively freezes time; stubs Date.today and Time.now
+      # to a specific value (absolute target)
+      travel_to(Date.parse("2018-02-10")) do
+        actual = Project.find_recently_started(6.months)
+        expect(actual.size).to eq(3)
+      end
+      # uncomment if travel_to has no block ?
+      #travel_back # should this method unfreeze time?
+      #
     end
   end
 end
