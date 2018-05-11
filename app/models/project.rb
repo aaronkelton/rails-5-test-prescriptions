@@ -2,6 +2,11 @@ class Project < ApplicationRecord
   validates :name, presence: true
   has_many :tasks, dependent: :destroy
 
+  def self.find_recently_started(time_span)
+    old_time = Date.today - time_span
+    all(conditions: ["start_date > ?", old_time.to_s(:db)])
+  end
+
   def self.velocity_length_in_days
     21
   end
