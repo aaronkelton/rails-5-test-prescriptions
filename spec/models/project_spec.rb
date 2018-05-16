@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Project do
+  it "stubs a object" do
+    project = Project.new(name: "Project Greenlight")
+    allow(project).to receive(:name) # project intercepts the actual object w/ name
+    expect(project.name).to be_nil
+  end
+
+  it "stubs an object again" do
+    project = Project.new(name: "Project Greenlight")
+    allow(project).to receive(:name).and_return("Fred")
+    expect(project.name).to eq "Fred"
+  end
+
+  it "stubs the class" do
+    allow(Project).to receive(:find).and_return(
+      Project.new(name: "Project Greenlight"))
+    project = Project.find(1)
+    expect(project.name).to eq "Project Greenlight"
+  end
+
   describe "without a task" do
     let(:project) { build_stubbed(:project) }
 
