@@ -5,6 +5,16 @@ RSpec.describe CreatesProject do
   let(:creator) { CreatesProject.new(
     name: "Project Runway", task_string: task_string) }
 
+  describe "mocking a failure" do
+    it "fails when we say it fails" do
+      project = instance_spy(Project, save: false)
+      allow(Project).to receive(:new).and_return(project)
+      creator = CreatesProject.new(name: "Name", task_string: "Task")
+      creator.create
+      expect(creator).not_to be_a_success
+    end
+  end
+
   describe "failure cases" do
     let(:task_string) { "" }
     it "fails when trying to save a project with no name" do

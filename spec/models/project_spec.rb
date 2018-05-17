@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Project do
+  it "mocks an object" do
+    mock_project = Project.new(name: "Project Greenlight")
+    expect(mock_project).to receive(:name).and_return("Fred")
+    expect(mock_project.name).to eq "Fred"
+  end
+
   it "stubs a object" do
     project = Project.new(name: "Project Greenlight")
     allow(project).to receive(:name) # project intercepts the actual object w/ name
