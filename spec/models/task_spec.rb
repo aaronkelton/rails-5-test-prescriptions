@@ -15,6 +15,13 @@ RSpec.describe Task do
     #  expect(Task.complete).to match([an_object_having_attributes(title: "Completed")])
     #end
 
+    it "stubs with multiple return values" do
+      task = Task.new
+      allow(task).to receive(:size).and_return(1, 2)
+      assert_equal(1, task.size)
+      assert_equal(2, task.size)
+      assert_equal(2, task.size) # why the duplication?
+    end
     it "does not have a new task as complete" do
       expect(task).not_to be_complete
     end
