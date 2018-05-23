@@ -53,6 +53,7 @@ group :development do
 end
 
 group :test do
+  gem 'capybara-screenshot'
   gem 'database_cleaner'
 end
 
