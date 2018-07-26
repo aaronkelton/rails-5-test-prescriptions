@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
   validates :name, presence: true
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, -> { order "project_order ASC" }, dependent: :destroy
 
   def self.find_recently_started(time_span)
     old_time = Date.today - time_span
@@ -9,6 +9,11 @@ class Project < ApplicationRecord
 
   def self.velocity_length_in_days
     21
+  end
+
+  def next_task_order
+    return 1 if tasks.empty?
+    (tasks.last.project_order || tasks.size) + 1
   end
 
   def incomplete_tasks

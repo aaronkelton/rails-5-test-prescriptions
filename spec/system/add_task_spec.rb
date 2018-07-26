@@ -3,12 +3,11 @@ require "rails_helper"
 RSpec.describe "adding a new task" do
 
   let!(:project) { create(:project, name: "Project Bluebook") }
-  let!(:task_1) { create(:task, title: "Search Sky", size: 1) }
-  let!(:task_2) { create(:task, title: "Use Telescope", size: 1) }
+  let!(:task_1) { create(:task, project: project, title: "Search Sky",
+                         size: 1, project_order: 1) }
+  let!(:task_2) { create(:task, project: project, title: "Use Telescope",
+                         project_order: 2, size: 1) }
 
-  # I don't think Rappin wants to actually run this test
-  # There is no show action, and no template yet
-  # Or maybe we're doing TDD... red, green, refactor
   it "can add and reorder a task" do
     visit(project_path(project))
     fill_in("Task", with: "Find UFOs")
